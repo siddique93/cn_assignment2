@@ -1,0 +1,35 @@
+import sys
+import os
+import os.path
+import pickle
+import re
+from BadNet0 import BadNet
+
+
+from socket import*
+serverPort = 12000
+serverSocket = socket(AF_INET, SOCK_DGRAM) 
+serverSocket.bind(('',serverPort))
+print "The server is ready to receive"
+#file = "ab.txt"
+file = "pic.jpg"
+#while 1:
+data, clientAddress=serverSocket.recvfrom(1024)
+f = open(file, 'wb+')
+while(data):
+            if not data:
+                   break
+            else:
+                   f.write(data)
+                   data, clientAddress=serverSocket.recvfrom(1024)
+                   if(data == 'Finished'):
+                      break
+                              
+f.close()
+serverSocket.close()
+print 'Server has closed the connection.'
+print
+
+
+        
+        

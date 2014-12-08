@@ -1,0 +1,24 @@
+import sys
+import os
+import os.path
+import pickle
+from BadNet0 import BadNet
+
+from socket import*
+serverIP = 'localhost'
+serverPort = 12000
+clientSocket = socket(AF_INET, SOCK_DGRAM)
+
+file = "winter.jpg"
+fileOpen = open(file, 'rb')
+print 'Sending requested file'
+print
+c = fileOpen.read(1024)
+while c:
+                BadNet.transmit(clientSocket,c,serverIP, serverPort)
+                c = fileOpen.read(1024)
+BadNet.transmit(clientSocket,'Finished',serverIP, serverPort)
+clientSocket.close()                
+fileOpen.close()
+
+print 'Connection has been closed by the server.'
